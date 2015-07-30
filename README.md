@@ -23,7 +23,7 @@ Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\
 
 ```php
 $client = new JobBrander\Jobs\Client\Provider\Juju([
-    // Credentials
+    'partnerId' => 'XXXXX',
 ]);
 
 // Search for 200 job listings for 'project manager' in Chicago, IL
@@ -44,14 +44,14 @@ $ ./vendor/bin/phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/jobbrander/jobs-simplyhired/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/jobbrander/jobs-juju/blob/master/CONTRIBUTING.md) for details.
 
 ## Credits
 
 - [Karl Hughes](https://github.com/karllhughes)
 - [Steven Maguire](https://github.com/stevenmaguire)
-- [All Contributors](https://github.com/jobbrander/jobs-simplyhired/contributors)
+- [All Contributors](https://github.com/jobbrander/jobs-juju/contributors)
 
 ## License
 
-The Apache 2.0. Please see [License File](https://github.com/jobbrander/jobs-simplyhired/blob/master/LICENSE) for more information.
+The Apache 2.0. Please see [License File](https://github.com/jobbrander/jobs-juju/blob/master/LICENSE) for more information.
