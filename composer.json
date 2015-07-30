@@ -1,14 +1,14 @@
 {
-    "name": "jobbrander/jobs-simplyhired",
+    "name": "jobbrander/jobs-juju",
     "type": "library",
-    "description": "Making it simple to integrate your application with SimplyHired Jobs API.",
+    "description": "Making it simple to integrate your application with Juju Jobs API.",
     "keywords": [
         "jobs",
         "api client",
         "object",
-        "simplyhired"
+        "juju"
     ],
-    "homepage": "https://github.com/JobBrander/jobs-simplyhired",
+    "homepage": "https://github.com/JobBrander/jobs-juju",
     "license": "Apache-2.0",
     "authors": [
         {

@@ -2,7 +2,7 @@
 
 use JobBrander\Jobs\Client\Job;
 
-class Simplyhired extends AbstractProvider
+class Juju extends AbstractProvider
 {
     /**
      * Developer Key

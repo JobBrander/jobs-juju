@@ -1,30 +1,29 @@
-# Simplyhired Jobs Client
+# Juju Jobs Client
 
-[![Latest Version](https://img.shields.io/github/release/JobBrander/jobs-simplyhired.svg?style=flat-square)](https://github.com/JobBrander/jobs-simplyhired/releases)
+[![Latest Version](https://img.shields.io/github/release/JobBrander/jobs-juju.svg?style=flat-square)](https://github.com/JobBrander/jobs-juju/releases)
 [![Software License](https://img.shields.io/badge/license-APACHE%202.0-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/JobBrander/jobs-simplyhired/master.svg?style=flat-square&1)](https://travis-ci.org/JobBrander/jobs-simplyhired)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/JobBrander/jobs-simplyhired.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-simplyhired/code-structure)
-[![Quality Score](https://img.shields.io/scrutinizer/g/JobBrander/jobs-simplyhired.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-simplyhired)
-[![Total Downloads](https://img.shields.io/packagist/dt/jobbrander/jobs-simplyhired.svg?style=flat-square)](https://packagist.org/packages/jobbrander/jobs-simplyhired)
+[![Build Status](https://img.shields.io/travis/JobBrander/jobs-juju/master.svg?style=flat-square&1)](https://travis-ci.org/JobBrander/jobs-juju)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/JobBrander/jobs-juju.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-juju/code-structure)
+[![Quality Score](https://img.shields.io/scrutinizer/g/JobBrander/jobs-juju.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-juju)
+[![Total Downloads](https://img.shields.io/packagist/dt/jobbrander/jobs-juju.svg?style=flat-square)](https://packagist.org/packages/jobbrander/jobs-juju)
 
-This package provides Simplyhired Jobs API support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
+This package provides Juju Jobs API support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
 
 ## Installation
 
 To install, use composer:
 
 ```
-composer require jobbrander/jobs-simplyhired
+composer require jobbrander/jobs-juju
 ```
 
 ## Usage
 
-Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\Provider\Simplyhired` as the provider.
+Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\Provider\Juju` as the provider.
 
 ```php
-$client = new JobBrander\Jobs\Client\Provider\Simplyhired([
-    'developerKey' => 'YOUR SIMPLYHIRED DEVELOPER KEY',
-    'ipAddress' => 'YOUR IP ADDRESS',
+$client = new JobBrander\Jobs\Client\Provider\Juju([
+    // Credentials
 ]);
 
 // Search for 200 job listings for 'project manager' in Chicago, IL

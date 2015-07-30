@@ -1,9 +1,9 @@
 <?php namespace JobBrander\Jobs\Client\Providers\Test;
 
-use JobBrander\Jobs\Client\Providers\Simplyhired;
+use JobBrander\Jobs\Client\Providers\Juju;
 use Mockery as m;
 
-class SimplyhiredTest extends \PHPUnit_Framework_TestCase
+class JujuTest extends \PHPUnit_Framework_TestCase
 {
     private $clientClass = 'JobBrander\Jobs\Client\Providers\AbstractProvider';
     private $collectionClass = 'JobBrander\Jobs\Client\Collection';
