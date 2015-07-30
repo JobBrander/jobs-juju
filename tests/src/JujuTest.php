@@ -12,16 +12,16 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->params = [
-            'developerKey' => 'XXXX'
+            'partnerId' => 'XXXX'
         ];
-        $this->client = new Simplyhired($this->params);
+        $this->client = new Juju($this->params);
     }
 
-    public function testItWillUseJsonFormat()
+    public function testItWillUseXmlFormat()
     {
         $format = $this->client->getFormat();
 
-        $this->assertEquals('json', $format);
+        $this->assertEquals('xml', $format);
     }
 
     public function testItWillUseGetHttpVerb()
@@ -35,21 +35,13 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     {
         $path = $this->client->getListingsPath();
 
-        $this->assertEquals('jobs', $path);
-    }
-
-    public function testItWillProvideEmptyParameters()
-    {
-        $parameters = $this->client->getParameters();
-
-        $this->assertEmpty($parameters);
-        $this->assertTrue(is_array($parameters));
+        $this->assertEquals('channel.item', $path);
     }
 
     public function testUrlIncludesKeywordWhenProvided()
     {
         $keyword = uniqid().' '.uniqid();
-        $param = 'q-'.urlencode($keyword);
+        $param = 'k='.urlencode($keyword);
 
         $url = $this->client->setKeyword($keyword)->getUrl();
 
@@ -58,7 +50,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlNotIncludesKeywordWhenNotProvided()
     {
-        $param = 'q-';
+        $param = 'k=';
 
         $url = $this->client->getUrl();
 
@@ -69,7 +61,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     {
         $city = uniqid();
         $state = uniqid();
-        $param = 'l-'.urlencode($city.', '.$state);
+        $param = 'l='.urlencode($city.', '.$state);
 
         $url = $this->client->setCity($city)->setState($state)->getUrl();
 
@@ -79,7 +71,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function testUrlIncludesLocationWhenCityProvided()
     {
         $city = uniqid();
-        $param = 'l-'.urlencode($city);
+        $param = 'l='.urlencode($city);
 
         $url = $this->client->setCity($city)->getUrl();
 
@@ -89,7 +81,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function testUrlIncludesLocationWhenStateProvided()
     {
         $state = uniqid();
-        $param = 'l-'.urlencode($state);
+        $param = 'l='.urlencode($state);
 
         $url = $this->client->setState($state)->getUrl();
 
@@ -98,7 +90,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlNotIncludesLocationWhenNotProvided()
     {
-        $param = 'l-';
+        $param = 'l=';
 
         $url = $this->client->getUrl();
 
@@ -108,7 +100,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function testUrlIncludesCountWhenProvided()
     {
         $count = uniqid();
-        $param = 'ws-'.$count;
+        $param = 'jpp='.$count;
 
         $url = $this->client->setCount($count)->getUrl();
 
@@ -117,7 +109,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlNotIncludesCountWhenNotProvided()
     {
-        $param = 'ws-';
+        $param = 'jpp=';
 
         $url = $this->client->setCount(null)->getUrl();
 
@@ -126,7 +118,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlIncludesDeveloperKeyWhenProvided()
     {
-        $param = 'auth='.$this->params['developerKey'];
+        $param = 'partnerid='.$this->params['partnerId'];
 
         $url = $this->client->getUrl();
 
@@ -135,9 +127,9 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlNotIncludesDeveloperKeyWhenNotProvided()
     {
-        $param = 'auth=';
+        $param = 'partnerid=';
 
-        $url = $this->client->setDeveloperKey(null)->getUrl();
+        $url = $this->client->setPartnerId(null)->getUrl();
 
         $this->assertNotContains($param, $url);
     }
@@ -145,7 +137,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function testUrlIncludesPageWhenProvided()
     {
         $page = uniqid();
-        $param = 'pn-'.$page;
+        $param = 'page='.$page;
 
         $url = $this->client->setPage($page)->getUrl();
 
@@ -154,7 +146,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlNotIncludesPageWhenNotProvided()
     {
-        $param = 'pn-';
+        $param = 'page=';
 
         $url = $this->client->setPage(null)->getUrl();
 
@@ -164,7 +156,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function testUrlIncludesIpWhenProvided()
     {
         $ip = uniqid();
-        $param = 'clip='.$ip;
+        $param = 'ipaddress='.$ip;
 
         $url = $this->client->setIpAddress($ip)->getUrl();
 
@@ -173,68 +165,38 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlIncludesIpWhenNotProvided()
     {
-        $param = 'clip=';
+        $param = 'ipaddress=';
 
         $url = $this->client->setIpAddress(null)->getUrl();
 
         $this->assertContains($param, $url);
     }
 
-    public function testUrlIncludesSearchStyleWhenProvided()
+    public function testUrlIncludesHighlightWhenProvided()
     {
-        $ssty = uniqid();
-        $param = 'ssty='.$ssty;
+        $highlight = uniqid();
+        $param = 'highlight='.$highlight;
 
-        $url = $this->client->setSearchStyle($ssty)->getUrl();
+        $url = $this->client->setHighlight($highlight)->getUrl();
 
         $this->assertContains($param, $url);
     }
 
-    public function testUrlIncludesSearchStyleWhenNotProvided()
+    public function testUrlIncludesHighlightWhenNotProvided()
     {
-        $param = 'ssty=';
+        $param = 'highlight=0';
 
-        $url = $this->client->setSearchStyle(null)->getUrl();
+        $url = $this->client->getUrl();
 
         $this->assertContains($param, $url);
     }
 
-    public function testUrlIncludesConfigFlagWhenProvided()
+    public function testItWillProvideEmptyParameters()
     {
-        $cflg = uniqid();
-        $param = 'cflg='.$cflg;
+        $parameters = $this->client->getParameters();
 
-        $url = $this->client->setConfigFlag($cflg)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlIncludesConfigFlagWhenNotProvided()
-    {
-        $param = 'cflg=';
-
-        $url = $this->client->setConfigFlag(null)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlIncludesDescriptionFragWhenProvided()
-    {
-        $frag = uniqid();
-        $param = 'frag='.$frag;
-
-        $url = $this->client->setDescriptionFrag($frag)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlIncludesDescriptionFragWhenNotProvided()
-    {
-        $param = 'frag=';
-
-        $url = $this->client->setDescriptionFrag(null)->getUrl();
-
-        $this->assertContains($param, $url);
+        $this->assertEmpty($parameters);
+        $this->assertTrue(is_array($parameters));
     }
 
     public function testItCanCreateJobFromPayload()
@@ -243,31 +205,33 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $results = $this->client->createJobObject($payload);
 
         $this->assertEquals($payload['title'], $results->title);
-        $this->assertEquals($payload['description'], $results->description);
         $this->assertEquals($payload['company'], $results->company);
-        $this->assertEquals($payload['url'], $results->url);
+        $this->assertEquals($payload['description'], $results->description);
+        $this->assertEquals($payload['link'], $results->url);
     }
 
     public function testItCanConnect()
     {
-        $provider = $this->getProviderAttributes();
-
-        for ($i = 0; $i < $provider['jobs_count']; $i++) {
-            $payload['jobs'][] = $this->createJobArray();
-        }
-
-        $responseBody = json_encode($payload);
+        $keyword = uniqid();
+        $responseBody = $this->createXmlResponse();
 
         $job = m::mock($this->jobClass);
-        $job->shouldReceive('setQuery')->with($provider['keyword'])
-            ->times($provider['jobs_count'])->andReturnSelf();
-        $job->shouldReceive('setSource')->with($provider['source'])
-            ->times($provider['jobs_count'])->andReturnSelf();
+        $job->shouldReceive('setQuery')
+            ->with($keyword)
+            ->once()
+            ->andReturnSelf();
+        $job->shouldReceive('setSource')
+            ->with('Juju')
+            ->once()
+            ->andReturnSelf();
 
         $response = m::mock('GuzzleHttp\Message\Response');
         $response->shouldReceive('getBody')->once()->andReturn($responseBody);
 
         $http = m::mock('GuzzleHttp\Client');
+
+        $this->client->setKeyword($keyword);
+
         $http->shouldReceive(strtolower($this->client->getVerb()))
             ->with($this->client->getUrl(), $this->client->getHttpClientOptions())
             ->once()
@@ -277,31 +241,75 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $results = $this->client->getJobs();
 
         $this->assertInstanceOf($this->collectionClass, $results);
-        $this->assertCount($provider['jobs_count'], $results);
     }
 
-    private function createJobArray() {
+    private function createJobArray()
+    {
         return [
             'title' => uniqid(),
             'company' => uniqid(),
-            'location' => uniqid(),
             'description' => uniqid(),
-            'date' => '2015-07-'.rand(1,31),
-            'url' => uniqid(),
+            'link' => uniqid(),
+            'postdate' => '2015-07-'.rand(1,31),
         ];
     }
 
-    private function getProviderAttributes($attributes = [])
+    private function createXmlResponse()
     {
-        $defaults = [
-            'path' => uniqid(),
-            'format' => 'json',
-            'keyword' => uniqid(),
-            'source' => uniqid(),
-            'params' => [uniqid()],
-            'jobs_count' => rand(2,10),
-
+        $array = [
+            'channel' => [
+                'item' => [
+                    0 => $this->createJobArray(),
+                    1 => $this->createJobArray()
+                ]
+            ]
         ];
-        return array_replace($defaults, $attributes);
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>
+            <rss version="2.0">
+                <channel>
+                    <title>Juju </title>
+                    <link>
+                    http://api.juju.com/jobs?partnerid=3f6eacc5a03e03b4287c1a0b43ece6bb&amp;ipaddress=10.1.30.15&amp;useragent=Mozilla%2F5.0+%28Windows%3B+U%3B+Windows+NT+5.1%3B+en-US%3B+rv%3A1.7%29+Gecko%2F20040803+Firefox%2F0.9.3&amp;k=engineering&amp;jpp=10&amp;page=1&amp;highlight=0
+                </link>
+                    <description>
+                    Juju - Search thousands of job sites at once for local jobs in your field.
+                </description>
+                    <language>en-us</language>
+                    <totalresults>437219</totalresults>
+                    <startindex>0</startindex>
+                    <itemsperpage>10</itemsperpage>
+                    <item>
+                        <title>Director of Quality Assurance</title>
+                        <zip></zip>
+                        <city>Birmingham</city>
+                        <county>Jefferson</county>
+                        <state>AL</state>
+                        <country>US</country>
+                        <source>GlidePath.com</source>
+                        <company>Milo&#39;s Tea Company</company>
+                        <link>http://www.juju.com/jad/00000000lss51f?impression_id=AESwhPSWQKWXJ90_tqmllg&amp;partnerid=3f6eacc5a03e03b4287c1a0b43ece6bb&amp;channel=</link>
+                        <onclick>juju_partner(this, \'235\');</onclick>
+                        <guid isPermaLink="false">00000000lss51f</guid>
+                        <postdate>07/29/15</postdate>
+                        <description>…quality control personnel on a day-to-day basis. | Supports concurrent  engineering  efforts by participating in design development projects representing quality assurance</description>
+                    </item>
+                    <item>
+                        <title>Director of Quality Assurance</title>
+                        <zip></zip>
+                        <city>Birmingham</city>
+                        <county>Jefferson</county>
+                        <state>AL</state>
+                        <country>US</country>
+                        <source>GlidePath.com</source>
+                        <company>Milo&#39;s Tea Company</company>
+                        <link>http://www.juju.com/jad/00000000lss51f?impression_id=AESwhPSWQKWXJ90_tqmllg&amp;partnerid=3f6eacc5a03e03b4287c1a0b43ece6bb&amp;channel=</link>
+                        <onclick>juju_partner(this, \'235\');</onclick>
+                        <guid isPermaLink="false">00000000lss51f</guid>
+                        <postdate>07/29/15</postdate>
+                        <description>…quality control personnel on a day-to-day basis. | Supports concurrent  engineering  efforts by participating in design development projects representing quality assurance</description>
+                    </item>
+                </channel>
+            </rss>';
+        return $xml;
     }
 }
