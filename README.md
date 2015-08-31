@@ -7,7 +7,8 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/JobBrander/jobs-juju.svg?style=flat-square)](https://scrutinizer-ci.com/g/JobBrander/jobs-juju)
 [![Total Downloads](https://img.shields.io/packagist/dt/jobbrander/jobs-juju.svg?style=flat-square)](https://packagist.org/packages/jobbrander/jobs-juju)
 
-This package provides Juju Jobs API support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
+This package provides [Juju Jobs API](http://www.juju.com/publisher/spec/)
+support for the JobBrander's [Jobs Client](https://github.com/JobBrander/jobs-common).
 
 ## Installation
 
@@ -27,10 +28,10 @@ $client = new JobBrander\Jobs\Client\Provider\Juju([
 ]);
 
 // Search for 200 job listings for 'project manager' in Chicago, IL
-$jobs = $client->setKeyword('project manager')
-    ->setCity('Chicago')
+$jobs = $client->setKeyword('project manager') // The query. This is in the same format as a basic search. Try their search or advanced search for possible formats.
+    ->setCity('Chicago')    // Combined with state to form location. The location can be a state, county, city, or zip code. Using multiple locations in one query is not supported.
     ->setState('IL')
-    ->setCount(200)
+    ->setCount(20)          // The number of jobs per page to return with each request. The maximum is 20, which is also the default.
     ->getJobs();
 ```
 
