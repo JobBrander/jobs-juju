@@ -213,7 +213,7 @@ class Juju extends AbstractProvider
      * @param  string  $value
      * @param  string  $key
      *
-     * @return Careerbuilder
+     * @return Juju
      */
     protected function updateQuery($value, $key)
     {
