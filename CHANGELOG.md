@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `jobs-juju` will be documented in this file
 
-## 1.0.0 - 2015-10-10
+## 1.0.0 - 2015-10-12
 
 ### Added
 - Support for all setter methods outlined in the [Juju API](http://www.juju.com/publisher/spec/)
