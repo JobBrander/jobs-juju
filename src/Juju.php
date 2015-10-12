@@ -25,9 +25,9 @@ class Juju extends AbstractProvider
         'setHighlight' => 'highlight',
         'setStartindex' => 'startindex',
         'setSession' => 'session',
-        'setKeyword' => 'q',
-        'setLocation' => 'l'
-        'setCount' => 'c',
+        'setKeyword' => 'k',
+        'setLocation' => 'l',
+        'setCount' => 'jpp',
     ];
 
     /**

@@ -12,7 +12,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->params = [
-            'partnerId' => 'XXXX'
+            'partnerid' => 'XXXX'
         ];
         $this->client = new Juju($this->params);
     }
@@ -57,13 +57,13 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $this->assertNotContains($param, $url);
     }
 
-    public function testUrlIncludesLocationWhenCityAndStateProvided()
+    public function testUrlIncludesLocationWhenCityStateProvided()
     {
         $city = uniqid();
         $state = uniqid();
         $param = 'l='.urlencode($city.', '.$state);
 
-        $url = $this->client->setCity($city)->setState($state)->getUrl();
+        $url = $this->client->setLocation($city.', '.$state)->getUrl();
 
         $this->assertContains($param, $url);
     }
@@ -73,7 +73,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $city = uniqid();
         $param = 'l='.urlencode($city);
 
-        $url = $this->client->setCity($city)->getUrl();
+        $url = $this->client->setLocation(urlencode($city))->getUrl();
 
         $this->assertContains($param, $url);
     }
@@ -83,7 +83,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $state = uniqid();
         $param = 'l='.urlencode($state);
 
-        $url = $this->client->setState($state)->getUrl();
+        $url = $this->client->setLocation(urlencode($state))->getUrl();
 
         $this->assertContains($param, $url);
     }
@@ -118,7 +118,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
 
     public function testUrlIncludesDeveloperKeyWhenProvided()
     {
-        $param = 'partnerid='.$this->params['partnerId'];
+        $param = 'partnerid='.$this->params['partnerid'];
 
         $url = $this->client->getUrl();
 
@@ -129,7 +129,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     {
         $param = 'partnerid=';
 
-        $url = $this->client->setPartnerId(null)->getUrl();
+        $url = $this->client->setPartnerid(null)->getUrl();
 
         $this->assertNotContains($param, $url);
     }
@@ -158,7 +158,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $ip = uniqid();
         $param = 'ipaddress='.$ip;
 
-        $url = $this->client->setIpAddress($ip)->getUrl();
+        $url = $this->client->setIpaddress($ip)->getUrl();
 
         $this->assertContains($param, $url);
     }
@@ -167,7 +167,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
     {
         $param = 'ipaddress=';
 
-        $url = $this->client->setIpAddress(null)->getUrl();
+        $url = $this->client->setIpaddress(null)->getUrl();
 
         $this->assertContains($param, $url);
     }
