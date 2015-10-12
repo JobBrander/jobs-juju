@@ -47,6 +47,7 @@ $jobs = $client
     ->setSession('')    // This parameter should be uniquely associated with a particular user. It can be an anonymized persistent or session cookie for web requests, or an anonymized contact id for email. Juju currently uses this internally for testing new algorithms. If you cannot or do not wish to provide this parameter, it's fine to omit it.
     // Additional setter methods
     ->setKeyword('project manager') // The query. This is in the same format as a basic search. Try their search or advanced search for possible formats.
+    ->setLocation('Chicago, IL')
     ->setCount(20)          // The number of jobs per page to return with each request. The maximum is 20, which is also the default.
     ->getJobs();
 ```
