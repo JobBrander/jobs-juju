@@ -24,13 +24,30 @@ Usage is the same as Job Branders's Jobs Client, using `\JobBrander\Jobs\Client\
 
 ```php
 $client = new JobBrander\Jobs\Client\Provider\Juju([
-    'partnerId' => 'XXXXX',
+    'partnerid' => 'XXXXX',
 ]);
 
-// Search for 200 job listings for 'project manager' in Chicago, IL
-$jobs = $client->setKeyword('project manager') // The query. This is in the same format as a basic search. Try their search or advanced search for possible formats.
-    ->setCity('Chicago')    // Combined with state to form location. The location can be a state, county, city, or zip code. Using multiple locations in one query is not supported.
-    ->setState('IL')
+// Search for 20 job listings for 'project manager' in Chicago, IL
+$jobs = $client
+    // Setter methods supported by JuJu API
+    ->setPartnerid('')  // (Required) Your assigned Publisher ID. This is given to you when signing up.
+    ->setIpaddress('')  // (Required) The IP Address of the end-user
+    ->setUseragent('')  // (Required) The User-Agent of the end-user
+    ->setK('')          // (K, L, or C Required)
+    ->setL('')          // (K, L, or C Required)
+    ->setC('')          // (K, L, or C Required)
+    ->setR('')          // The radius, in miles, around the search location. The default is 20 and the maximum is 100.
+    ->setOrder('')      // The order in which to return results. Choices are: relevance, date, distance. The default is relevance.
+    ->setDays('')       // The number of days back to search. Default is 90.
+    ->setJpp('')        // The number of jobs per page to return with each request. The maximum is 20, which is also the default.
+    ->setPage('')       // The page of results to return. Page numbers start at 1, the default.
+    ->setChannel('')    // The channel name used to track performance for multiple sites. See the section on channels.
+    ->setHighlight('')  // By default, results will be highlighted with HTML bolding. Set this flag to 0 to turn highlighting off.
+    ->setStartindex('') // If you are using API results as backfill on one page of results, use this flag to 'skip' jobs from the top of further API results, because you've already shown them in backfill. The minimum (and default) is 1, which indicates that results should start on the first job. Simple paging should be implemented with the page and jpp parameters. If you are unsure, you probably want to use page and jpp.
+    ->setSession('')    // This parameter should be uniquely associated with a particular user. It can be an anonymized persistent or session cookie for web requests, or an anonymized contact id for email. Juju currently uses this internally for testing new algorithms. If you cannot or do not wish to provide this parameter, it's fine to omit it.
+    // Additional setter methods
+    ->setKeyword('project manager') // The query. This is in the same format as a basic search. Try their search or advanced search for possible formats.
+    ->setLocation('Chicago, IL')
     ->setCount(20)          // The number of jobs per page to return with each request. The maximum is 20, which is also the default.
     ->getJobs();
 ```

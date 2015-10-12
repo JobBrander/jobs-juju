@@ -5,32 +5,87 @@ use JobBrander\Jobs\Client\Job;
 class Juju extends AbstractProvider
 {
     /**
-     * Highlight
+     * Map of setter methods to query parameters
      *
-     * @var string
+     * @var array
      */
-    protected $highlight;
+    protected $queryMap = [
+        'setPartnerid' => 'partnerid',
+        'setIpaddress' => 'ipaddress',
+        'setUseragent' => 'useragent',
+        'setK' => 'k',
+        'setL' => 'l',
+        'setC' => 'c',
+        'setR' => 'r',
+        'setOrder' => 'order',
+        'setDays' => 'days',
+        'setJpp' => 'jpp',
+        'setPage' => 'page',
+        'setChannel' => 'channel',
+        'setHighlight' => 'highlight',
+        'setStartindex' => 'startindex',
+        'setSession' => 'session',
+        'setKeyword' => 'k',
+        'setLocation' => 'l',
+        'setCount' => 'jpp',
+    ];
 
     /**
-     * Client IP Address
+     * Current api query parameters
      *
-     * @var string
+     * @var array
      */
-    protected $ipAddress;
+    protected $queryParams = [
+        'partnerid' => null,
+        'ipaddress' => null,
+        'useragent' => null,
+        'k' => null,
+        'l' => null,
+        'c' => null,
+        'r' => null,
+        'order' => null,
+        'days' => null,
+        'jpp' => null,
+        'page' => null,
+        'channel' => null,
+        'highlight' => null,
+        'startindex' => null,
+        'session' => null,
+    ];
 
     /**
-     * Partner ID
+     * Create new J2c jobs client.
      *
-     * @var string
+     * @param array $parameters
      */
-    protected $partnerId;
+    public function __construct($parameters = [])
+    {
+        parent::__construct($parameters);
+        array_walk($parameters, [$this, 'updateQuery']);
+        // Set default parameters
+        if (!isset($this->ipaddress)) {
+            $this->updateQuery($this->getIpAddress(), 'ipaddress');
+        }
+        if (!isset($this->useragent)) {
+            $this->updateQuery($this->getUserAgent(), 'useragent');
+        }
+    }
 
     /**
-     * User Agent
+     * Magic method to handle get and set methods for properties
      *
-     * @var string
+     * @param  string $method
+     * @param  array  $parameters
+     *
+     * @return mixed
      */
-    protected $userAgent;
+    public function __call($method, $parameters)
+    {
+        if (isset($this->queryMap[$method], $parameters[0])) {
+            $this->updateQuery($parameters[0], $this->queryMap[$method]);
+        }
+        return parent::__call($method, $parameters);
+    }
 
     /**
      * Returns the standardized job object
@@ -87,30 +142,6 @@ class Juju extends AbstractProvider
     }
 
     /**
-     * Get listings path
-     *
-     * @return  string
-     */
-    public function getListingsPath()
-    {
-        return 'channel.item';
-    }
-
-    /**
-     * Get Highlight
-     *
-     * @return  string
-     */
-    public function getHighlight()
-    {
-        if (isset($this->highlight)) {
-            return $this->highlight;
-        } else {
-            return '0';
-        }
-    }
-
-    /**
      * Get IP Address
      *
      * @return  string
@@ -125,19 +156,13 @@ class Juju extends AbstractProvider
     }
 
     /**
-     * Get combined location
+     * Get listings path
      *
-     * @return string
+     * @return  string
      */
-    public function getLocation()
+    public function getListingsPath()
     {
-        $location = ($this->city ? $this->city.', ' : null).($this->state ?: null);
-
-        if ($location) {
-            return $location;
-        }
-
-        return null;
+        return 'channel.item';
     }
 
     /**
@@ -147,26 +172,7 @@ class Juju extends AbstractProvider
      */
     public function getQueryString()
     {
-        $query_params = [
-            'partnerid' => 'getPartnerId',
-            'ipaddress' => 'getIpAddress',
-            'useragent' => 'getUserAgent',
-            'k' => 'getKeyword',
-            'l' => 'getLocation',
-            'jpp' => 'getCount',
-            'page' => 'getPage',
-            'highlight' => 'getHighlight',
-        ];
-
-        $query_string = [];
-
-        array_walk($query_params, function ($value, $key) use (&$query_string) {
-            $computed_value = $this->$value();
-            if (!is_null($computed_value)) {
-                $query_string[$key] = $computed_value;
-            }
-        });
-        return '?'.http_build_query($query_string);
+        return http_build_query($this->queryParams);
     }
 
     /**
@@ -178,7 +184,7 @@ class Juju extends AbstractProvider
     {
         $query_string = $this->getQueryString();
 
-        return 'http://api.juju.com/jobs'.$query_string;
+        return 'http://api.juju.com/jobs?'.$query_string;
     }
 
     /**
@@ -199,5 +205,21 @@ class Juju extends AbstractProvider
     public function getVerb()
     {
         return 'GET';
+    }
+
+    /**
+     * Attempts to update current query parameters.
+     *
+     * @param  string  $value
+     * @param  string  $key
+     *
+     * @return Juju
+     */
+    protected function updateQuery($value, $key)
+    {
+        if (array_key_exists($key, $this->queryParams)) {
+            $this->queryParams[$key] = $value;
+        }
+        return $this;
     }
 }
