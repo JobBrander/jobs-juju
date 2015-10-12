@@ -125,15 +125,6 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($param, $url);
     }
 
-    public function testUrlNotIncludesDeveloperKeyWhenNotProvided()
-    {
-        $param = 'partnerid=';
-
-        $url = $this->client->setPartnerid(null)->getUrl();
-
-        $this->assertNotContains($param, $url);
-    }
-
     public function testUrlIncludesPageWhenProvided()
     {
         $page = uniqid();
@@ -178,15 +169,6 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $param = 'highlight='.$highlight;
 
         $url = $this->client->setHighlight($highlight)->getUrl();
-
-        $this->assertContains($param, $url);
-    }
-
-    public function testUrlIncludesHighlightWhenNotProvided()
-    {
-        $param = 'highlight=0';
-
-        $url = $this->client->getUrl();
 
         $this->assertContains($param, $url);
     }
