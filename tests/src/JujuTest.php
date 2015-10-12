@@ -130,6 +130,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $param = 'partnerid=';
 
         $url = $this->client->setPartnerid(null)->getUrl();
+        print_r($url); exit;
 
         $this->assertNotContains($param, $url);
     }
