@@ -1,6 +1,23 @@
 # Changelog
 All Notable changes to `jobs-juju` will be documented in this file
 
+## 2.0.0 - 2016-10-03
+
+### Added
+- New Composer org name for jobapis, upgraded to v2.
+- Support for v.2 of jobs-common package
+
+### Fixed
+- Updated test namespace.
+
+### Added
+
+### Removed
+- setCity and setState methods not supported by official API
+
+### Security
+- Nothing
+
 ## 1.0.0 - 2015-10-12
 
 ### Added
