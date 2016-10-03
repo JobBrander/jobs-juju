@@ -1,9 +1,9 @@
 <?php namespace JobApis\Jobs\Client\Providers\Test;
 
-use JobApis\Jobs\Client\Providers\Juju;
+use JobApis\Jobs\Client\Providers\JujuProvider;
 use Mockery as m;
 
-class JujuTest extends \PHPUnit_Framework_TestCase
+class JujuProviderTest extends \PHPUnit_Framework_TestCase
 {
     private $clientClass = 'JobBrander\Jobs\Client\Providers\AbstractProvider';
     private $collectionClass = 'JobBrander\Jobs\Client\Collection';
@@ -14,7 +14,7 @@ class JujuTest extends \PHPUnit_Framework_TestCase
         $this->params = [
             'partnerid' => 'XXXX'
         ];
-        $this->client = new Juju($this->params);
+        $this->client = new JujuProvider($this->params);
     }
 
     public function testItWillUseXmlFormat()

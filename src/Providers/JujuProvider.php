@@ -2,7 +2,7 @@
 
 use JobApis\Jobs\Client\Job;
 
-class Juju extends AbstractProvider
+class JujuProvider extends AbstractProvider
 {
     /**
      * Map of setter methods to query parameters
