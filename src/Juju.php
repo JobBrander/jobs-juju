@@ -1,6 +1,6 @@
-<?php namespace JobBrander\Jobs\Client\Providers;
+<?php namespace JobApis\Jobs\Client\Providers;
 
-use JobBrander\Jobs\Client\Job;
+use JobApis\Jobs\Client\Job;
 
 class Juju extends AbstractProvider
 {

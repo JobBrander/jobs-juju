@@ -1,6 +1,6 @@
-<?php namespace JobBrander\Jobs\Client\Providers\Test;
+<?php namespace JobApis\Jobs\Client\Providers\Test;
 
-use JobBrander\Jobs\Client\Providers\Juju;
+use JobApis\Jobs\Client\Providers\Juju;
 use Mockery as m;
 
 class JujuTest extends \PHPUnit_Framework_TestCase
